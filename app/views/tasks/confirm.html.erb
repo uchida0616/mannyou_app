@@ -1,0 +1,8 @@
+<h3>以下の内容で追加する</h3>
+<%= form_with(model: @task, local: true) do |f| %>
+  <%= f.hidden_field :title %>
+  <%= f.hidden_field :content %>
+  <p>タイトル:<%= @task.title %></p>
+  <p>本文:<%= @task.content %></p>
+  <%= f.submit "追加する" %>
+<% end %>
