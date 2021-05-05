@@ -6,4 +6,12 @@ module TasksHelper
       task_path
     end
   end
+
+  def button_text
+    if action_name == "new"
+      "追加する"
+    elsif action_name == "edit"
+      "編集する"
+    end
+  end
 end
