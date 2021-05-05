@@ -2,4 +2,4 @@
 columm | data
 ------------ | -------------
 title | string
-content | string
+content | text
