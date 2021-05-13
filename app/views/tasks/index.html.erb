@@ -5,8 +5,8 @@
     <th>タイトル</th>
     <th>内容</th>
   </tr>
-<% @tasks.each do |task| %>
-  <tr>
+<% @tasks.each_with_index do |task| %>
+  <tr class="task">
     <td><%= task.title %></td>
     <td><%= task.content %></td>
     <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
