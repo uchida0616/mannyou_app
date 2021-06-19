@@ -1,8 +1,8 @@
 <h1>ブログ一覧</h1>
 <%= form_with(local: true, url: tasks_path, method: :get) do |f| %>
-  <%= f.label :タスク名 %>
+  <%= f.label :title, "タスク名" %>
   <%= f.text_field :title %>
-  <%= f.label :ステータス %>
+  <%= f.label :status, "ステータス" %>
   <%= f.select :status, Task.statuses.keys, include_blank: '選択してください' %>
   <%= f.submit :search　%>
 <% end %>
