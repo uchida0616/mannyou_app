@@ -2,8 +2,14 @@
 <%= form_with(model: @task, url: tasks_path, local: true) do |f| %>
   <%= f.hidden_field :title %>
   <%= f.hidden_field :content %>
+  <%= f.hidden_field :status %>
+  <%= f.hidden_field :expired_at %>
+  <%= f.hidden_field :priority %>
   <p>タイトル:<%= @task.title %></p>
   <p>本文:<%= @task.content %></p>
+  <P>ステータス:<%= @task.status %>
+  <p>終了期限:<%= @task.expired_at %></p>
+  <p>優先度:<%= @task.priority %></p>
   <%= f.submit "追加する" %>
   <%= f.submit "戻る", name: 'back' %>
 <% end %>

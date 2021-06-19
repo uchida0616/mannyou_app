@@ -17,6 +17,17 @@
     <%= f.label :content %>
     <%= f.text_field :content %>
   </div>
-  <%= f.submit button_text %>
+  <div class="task_expired_at">
+    <%= f.label :expired_at %>
+    <%= f.datetime_select :expired_at %>
+  </div>
+  <div class="task_status">
+    <%= f.label :status %>
+    <%= f.select :status, Task.statuses.keys %>
+  </div>
+  <div class="task_priority">
+    <%= f.label :priority %>
+    <%= f.select :priority, Task.priorities.keys %>
+  <%= f.submit button_text, class: 'btn btn-success'  %>
 <% end %>
-<%= link_to "タスク一覧画面に戻る", tasks_path %>
+<%= link_to "タスク一覧画面に戻る", tasks_path, class: 'btn btn-primary btn-sm' %>
