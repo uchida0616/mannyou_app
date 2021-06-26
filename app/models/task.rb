@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  belongs_to :user
   validates :title, presence: true, length: { maximum: 30 }
   validates :content, presence: true, length: { maximum: 80 }
   # scope :search_title_status, -> (title, status) { where("title LIKE ?", "%#{title}%") && where(status: status)}
