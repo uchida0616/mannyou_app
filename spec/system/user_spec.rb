@@ -12,7 +12,7 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能・管理�
         fill_in 'user_email', with: 'test_user_03@test.com'
         fill_in 'user_password', with: '12345678'
         fill_in 'user_password_confirmation', with: '12345678'
-        click_on 'アカウント作成'
+        click_on 'Create my account'
         expect(page).to have_content 'test_user_03'
       end
       it '​ログインしていない時はログイン画面に飛ぶテスト​' do
@@ -52,14 +52,9 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能・管理�
       end
 
       it "一般ユーザが他人の詳細画面に飛ぶとタスク一覧ページに遷移すること" do
-        visit user_path(2)
-        expect(page).to have_content "権限がありません。ログインしてください。"
-      end
-
-      it "ログイン画面に戻る" do
-        visit user_path(id: @user.id)
-        click_link "Logout"
-        expect(page).to have_content "ログアウトしました"
+        # binding.irb
+        visit user_path(@second_user)
+        expect(page).to have_content "権限がありません。"
       end
     end
   end
@@ -67,13 +62,13 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能・管理�
   describe "管理画面のテスト" do
     context "管理ユーザ作成" do
       it "管理者は管理画面にアクセスできること" do
-        FactoryBot.create(:second_user)
+        @second_user = FactoryBot.create(:second_user)
         visit new_session_path
         fill_in "session_email", with: "test_user_02@test.com​"
         fill_in "session_password", with: "87654321"
         click_on "Log in"
         visit admin_users_path
-        expect(page).to have_content "ユーザー登録一覧"
+        expect(page).to have_content "ユーザー一覧"
       end
     end
 
@@ -105,7 +100,8 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能・管理�
         fill_in "user_email", with: "g.tomooka@test.com"
         fill_in "user_password", with: "23456789"
         fill_in "user_password_confirmation", with: "23456789"
-        click_on "登録する"
+        click_on "Create my account"
+        # binding.irb
         expect(page).to have_content "Tomioka Giyu"
       end
 
@@ -122,14 +118,17 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能・管理�
         fill_in 'user_email', with: 'test_user_0100@test.com'
         fill_in 'user_password', with: '12345678'
         fill_in 'user_password_confirmation', with: '12345678'
-        click_button '更新する'
+        # binding.irb
+        click_button 'Create my account'
         expect(page).to have_content "test_user_0100"
       end
 
       it "管理者はユーザーを削除できる" do
         @user = FactoryBot.create(:user)
         visit admin_users_path
-        click_link "Delete", match: :first
+        page.dismiss_confirm("Are you sure?") do
+          click_link "削除", match: :first
+        end
       end
     end
   end

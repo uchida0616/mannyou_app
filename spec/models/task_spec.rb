@@ -1,30 +1,37 @@
 require 'rails_helper'
-describe 'タスクモデル機能', type: :model do
-  describe 'バリデーションのテスト' do
-    context 'タスクのタイトルが空の場合' do
-      it 'バリデーションにひっかかる' do
-        task = Task.new(title: '', content: '失敗テスト')
-        expect(task).not_to be_valid
+RSpec.describe 'Task', type: :model do
+  before do
+    @user = FactoryBot.create(:user)
+  end
+  describe 'タスクモデル機能', type: :model do
+    describe 'バリデーションのテスト' do
+      context 'タスクのタイトルが空の場合' do
+        it 'バリデーションにひっかかる' do
+          task = Task.new(title: '', content: '失敗テスト')
+          expect(task).not_to be_valid
+        end
       end
-    end
-    context 'タスクの詳細が空の場合' do
-      it 'バリデーションにひっかかる' do
-        task = Task.new(title: '失敗テスト', content: '')
-        expect(task).not_to be_valid
+      context 'タスクの詳細が空の場合' do
+        it 'バリデーションにひっかかる' do
+          task = Task.new(title: '失敗テスト', content: '')
+          expect(task).not_to be_valid
+        end
       end
-    end
-    context 'タスクのタイトルと詳細に内容が記載されている場合' do
-      it 'バリデーションが通る' do
-        task = Task.new(title: 'task1', content: 'content1')
-        expect(task).to be_valid
+      context 'タスクのタイトルと詳細に内容が記載されている場合' do
+        it 'バリデーションが通る' do
+          task = FactoryBot.create(:task, title: 'task', content: 'content', user: @user)
+          # binding.irb
+          # task = Task.new(title: 'task1', content: 'content1')
+          expect(task).to be_valid
+        end
       end
     end
   end
 
   describe '検索機能' do
     # 必要に応じて、テストデータの内容を変更して構わない
-    let!(:task) { FactoryBot.create(:task, title: 'task') }
-    let!(:second_task) { FactoryBot.create(:second_task, title: "sample") }
+    let!(:task) { FactoryBot.create(:task, title: 'task', user: @user) }
+    let!(:second_task) { FactoryBot.create(:second_task, title: "sample", user: @user) }
     context 'scopeメソッドでタイトルのあいまい検索をした場合' do
       it "検索キーワードを含むタスクが絞り込まれる" do
         expect(Task.search_title('task')).to include(task)

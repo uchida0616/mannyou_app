@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
+  before_action :ensure_correct_user, only: [:show]
 
   def new
     redirect_to user_path(current_user.id) if logged_in?
@@ -24,4 +25,10 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
+
+  def ensure_correct_user
+  	if @current_user.id != params[:id].to_i
+  		redirect_to tasks_path, notice: "権限がありません。"
+    end
+	end
 end

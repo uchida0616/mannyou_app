@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:update, :edit, :show, :destroy]
+  before_action :require_admin
 
   def new
     @user = User.new
@@ -39,6 +40,12 @@ class Admin::UsersController < ApplicationController
   end
 
   private
+
+  def require_admin
+    unless current_user.admin?
+      redirect_to tasks_path, notice: "あなたは管理者ではありません"
+    end
+  end
 
   def user_params
     params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation)
