@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     @tasks = @tasks.order(expired_at: :asc) if params[:sort_expired]
     @tasks = @tasks.order(priority: :asc) if params[:sort_priority_high]
 
@@ -16,7 +16,8 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task=Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
+    # @task=Task.new(task_params)
     if params[:back]
       render :new
     else
@@ -48,7 +49,8 @@ class TasksController < ApplicationController
   end
 
   def confirm
-    @task = Task.new(task_params)
+    # @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     render :new if @task.invalid?
   end
 
