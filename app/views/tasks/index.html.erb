@@ -4,6 +4,8 @@
   <%= f.text_field :title %>
   <%= f.label :ステータス %>
   <%= f.select :status, Task.statuses.keys, include_blank: '選択してください' %>
+  <%= f.label :ラベル %>
+  <%= f.select("label_id", Label.all.pluck(:name, :id), { include_blank: true }) %>
   <%= f.submit :search　%>
 <% end %>
 <%= link_to '新規登録', new_task_path, class: 'btn btn-success'  %>
@@ -33,7 +35,8 @@
             <a class="dropdown-item" href="#"><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></a>
           </div>
         </div>
-    </th>
+      </th>
+      <th scope="col">タグ</th>
     </tr>
   </thead>
   <tbody>
@@ -44,6 +47,11 @@
       <td><%= task.priority %></td>
       <td><%= task.status %></td>
       <td><%= task.expired_at %></td>
+      <td>
+        <% task.labels.each do |label| %>
+          <%= label.name %>
+        <% end %>
+      </td>
       <td><%= link_to '確認', task_path(task.id), class: 'btn btn-primary' %></td>
       <td><%= link_to "編集", edit_task_path(task.id), class: 'btn btn-success' %></td>
       <td><%= link_to '削除', task_path(task.id), method: :delete ,data: { confirm: '本当に削除しますか？'}, class: 'btn btn-danger'  %></td>

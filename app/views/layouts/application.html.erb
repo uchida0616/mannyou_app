@@ -26,15 +26,17 @@
               <li><%= link_to 'マイページ',user_path(current_user.id), id: "my_page" %></li>
               <li><%= link_to 'ログアウト',session_path(current_user.id), method: :delete, data:{ confirm: "ログアウトしますか？"} %></li>
               <h4><%= current_user.name %>としてログイン中</h4>
-              <% if current_user.admin? %>
-                <li><%= link_to "管理者用ユーザ一覧", admin_users_path %></li>
-                <li><%= link_to "管理者用ユーザ一作成", new_admin_user_path %></li>
-              <% else %>
-                <li><%= link_to '新規会員登録',new_user_path %></li>
-                <!-- ログインしているときは、ユーザの新規登録画面（new画面）に行かせないようにコントローラで制御する -->
-                <li><%= link_to 'ログイン',new_session_path %></li>
-              <% end %>
+
+            <% if current_user.admin? %>
+              <li><%= link_to "管理者用ユーザ一覧", admin_users_path %></li>
+              <li><%= link_to "管理者用ユーザ一作成", new_admin_user_path %></li>
             <% end %>
+            <% else %>
+              <li><%= link_to '新規会員登録',new_user_path %></li>
+              <!-- ログインしているときは、ユーザの新規登録画面（new画面）に行かせないようにコントローラで制御する -->
+              <li><%= link_to 'ログイン',new_session_path %></li>
+            <% end %>
+
           </ul>
         </div>
       </div>

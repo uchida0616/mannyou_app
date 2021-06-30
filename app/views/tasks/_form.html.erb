@@ -13,21 +13,35 @@
     <%= f.label :title%>
     <%= f.text_field :title %>
   </div>
+  <br>
   <div class="task_content">
     <%= f.label :content %>
     <%= f.text_field :content %>
   </div>
+  <br>
   <div class="task_expired_at">
     <%= f.label :expired_at %>
     <%= f.datetime_select :expired_at %>
   </div>
+  <br>
   <div class="task_status">
     <%= f.label :status %>
     <%= f.select :status, Task.statuses.keys %>
   </div>
+  <br>
   <div class="task_priority">
     <%= f.label :priority %>
     <%= f.select :priority, Task.priorities.keys %>
+  </div>
+  <br>
+  <div class="task_label">
+    <% Label.all.each do |label| %>
+      <%=f.check_box :label_ids, { multiple: true, checked: @task.has_label?(label), disabled: label[:disabled], include_hidden: false }, label[:id] %>
+      <%= f.label :label_ids, label.name, class:"label-bg" %>
+    <% end %>
+  </div>
+  <br>
   <%= f.submit button_text, class: 'btn btn-success'  %>
 <% end %>
-<%= link_to "タスク一覧画面に戻る", tasks_path, class: 'btn btn-primary btn-sm' %>
+<br>
+<%= link_to "タスク一覧画面に戻る", tasks_path, class: 'btn btn-success' %>
