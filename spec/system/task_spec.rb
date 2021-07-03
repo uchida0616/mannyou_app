@@ -15,11 +15,12 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
+        # binding.irb
         visit new_task_path
-        fill_in "タイトル", with: "task_title"
-        fill_in "内容", with: "task_content"
-        select "未着手", from: "ステータス"
-        select "高", from: "優先度"
+        fill_in "Title", with: "task_title"
+        fill_in "Content", with: "task_content"
+        select "未着手", from: "Status"
+        select "高", from: "Priority"
         click_on "追加する" #新規作成画面用
         click_on "追加する" #確認画面用
         expect(page).to have_content 'task_title'
@@ -37,20 +38,22 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
+        # binding.irb
         # task = FactoryBot.create(:task, title: 'task')
         # task = FactoryBot.create(:second_task, title: 'task2')
         # task = FactoryBot.create(:third_task, title: 'task3')
         visit tasks_path
         task_list = all('.task_row')
-        expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル１'
+        expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル2'
       end
     end
     context '終了期限でソートされた場合' do
-      it '終了期限が遅いタスクが一番上に表示される' do
+      it '終了期限がはやいタスクが一番上に表示される' do
         # task = FactoryBot.create(:task, title: 'task', user: @user)
         # task = FactoryBot.create(:second_task, title: 'task2', user: @user)
         # task = FactoryBot.create(:third_task, title: 'task3', user: @user)
         visit tasks_path
+        click_on "終了期限"
         click_on "終了期限でソートする"
         task_list = all('.task_row')
         expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタイトル１'
