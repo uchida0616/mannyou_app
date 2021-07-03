@@ -12,4 +12,5 @@ Rails.application.routes.draw do
       post :confirm
     end
   end
+  root 'sessions#new'
 end
