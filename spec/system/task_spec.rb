@@ -49,6 +49,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '終了期限でソートされた場合' do
       it '終了期限がはやいタスクが一番上に表示される' do
+        # binding.irb
         # task = FactoryBot.create(:task, title: 'task', user: @user)
         # task = FactoryBot.create(:second_task, title: 'task2', user: @user)
         # task = FactoryBot.create(:third_task, title: 'task3', user: @user)

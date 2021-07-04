@@ -95,11 +95,12 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能・管理�
       end
 
       it "管理者はユーザ新規登録ができる" do
+        # binding.irb
         click_link "新規ユーザー作成"
-        fill_in "user_name", with: "Tomioka Giyu"
-        fill_in "user_email", with: "g.tomooka@test.com"
-        fill_in "user_password", with: "23456789"
-        fill_in "user_password_confirmation", with: "23456789"
+        fill_in "Name", with: "Tomioka Giyu"
+        fill_in "Email", with: "g.tomooka@test.com"
+        fill_in "Password", with: "23456789"
+        fill_in "Password confirmation", with: "23456789"
         click_on "Create my account"
         # binding.irb
         expect(page).to have_content "Tomioka Giyu"
