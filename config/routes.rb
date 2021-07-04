@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :labels
   namespace :admin do
     resources :users, only: [:index, :show, :new, :create, :destroy, :edit, :update] do
     end
@@ -11,5 +12,5 @@ Rails.application.routes.draw do
       post :confirm
     end
   end
-  root to: 'sessions#new'
+  root 'sessions#new'
 end
